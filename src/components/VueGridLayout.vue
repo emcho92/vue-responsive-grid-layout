@@ -341,9 +341,8 @@ export default class VueGridLayout extends Vue {
         if (!oldLayout) {
             oldLayout = cloneLayout(this.layout);
         }
-        if (!isEqual(oldLayout, newLayout)) {
-            this.$emit('layout-update', newLayout, last);
-        }
+        
+        this.$emit('layout-update', newLayout, last);
     }
 
     public onResizeStart(element: Vue, i: string, w: number, h: number, { e, node }: GridResizeEvent) {
