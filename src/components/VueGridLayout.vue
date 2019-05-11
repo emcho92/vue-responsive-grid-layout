@@ -1,5 +1,5 @@
 <template>
-    <div :class="this.className">
+    <div :class="this.className" :style="{ height: containerHeight }">
         <slot :containerWidth="width" :layout="layout" :rowHeight="rowHeight" :cols="cols" :maxRows="maxRows">
         </slot>
         <VueGridItem
@@ -341,7 +341,7 @@ export default class VueGridLayout extends Vue {
         if (!oldLayout) {
             oldLayout = cloneLayout(this.layout);
         }
-        
+
         this.$emit('layout-update', newLayout, last);
     }
 
