@@ -1,5 +1,5 @@
 <template>
-    <div :class="this.className" :style="{ height: containerHeight }">
+    <div :class="this.className" :style="{ height: containerHeight() }">
         <slot :containerWidth="width" :layout="layout" :rowHeight="rowHeight" :cols="cols" :maxRows="maxRows">
         </slot>
         <VueGridItem
@@ -210,7 +210,7 @@ export default class VueGridLayout extends Vue {
      * @return {String} Container height in pixels.
      */
     public containerHeight() {
-        if (!this.autoSize) {
+        if (!this.autoSize || !this.layout) {
             return;
         }
         const nbRow = bottom(this.layout);
