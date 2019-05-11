@@ -20,6 +20,8 @@
 <script lang="ts">
 import {Component, Vue, Prop, Watch} from 'vue-property-decorator';
 import VueGridLayout from './VueGridLayout.vue';
+import throttle from 'lodash/throttle';
+import ResizeObserver from 'resize-observer-polyfill';
 
 import {
     Layout,
@@ -44,6 +46,7 @@ export default class VueResponsiveGridLayout extends Vue {
     public width: number = 0;
     public children: Vue[] = [];
     public isMounted: boolean = false;
+    public resizeObserver = new ResizeObserver(throttle(this.handleResize, 100));
 
     @Prop({
         type: Boolean,
@@ -175,6 +178,7 @@ export default class VueResponsiveGridLayout extends Vue {
         this.$nextTick( () => {
             this.initLayout();
         });
+        this.resizeObserver.observe(this.$el);
     }
 
     public created() {
@@ -183,6 +187,7 @@ export default class VueResponsiveGridLayout extends Vue {
 
     public beforeDestroyed() {
         window.removeEventListener('resize', this.handleResize);
+        this.resizeObserver.disconnect();
     }
 
 
